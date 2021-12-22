@@ -109,7 +109,7 @@ function ConnectedNodeMap(props) {
                 backgroundColor='#eee'
                 nodeColor="transparent"
                 nodeAutoColorBy="#fff"
-                linkWidth={link => highlightLinks.has(link) ? 3 : 1}
+                linkWidth={link => highlightLinks.has(link) ? 2 : 1}
 
                 nodeCanvasObjectMode={() => "after"}
                 nodeCanvasObject={(node, ctx, globalScale) => {
@@ -118,7 +118,7 @@ function ConnectedNodeMap(props) {
                     ctx.font = `${fontSize}px Sans-Serif`;
                     ctx.textAlign = "center";
                     ctx.textBaseline = "middle";
-                    ctx.fillStyle = "black"; //node.color;
+                    ctx.fillStyle = highlightNodes.has(node) ? "red" : "black"; //node.color;
                     ctx.fillText(label, node.x, node.y + 10);
 
                     const size = 15;
