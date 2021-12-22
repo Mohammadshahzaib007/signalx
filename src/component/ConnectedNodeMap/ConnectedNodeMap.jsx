@@ -1,29 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import ForceGraph3D from 'react-force-graph-3d'
+
 import ForceGraph2D from 'react-force-graph-2d'
 
 function ConnectedNodeMap(props) {
 
     const { data } = props
 
-    const imgs = ['cat.jpg', 'dog.jpg', 'eagle.jpg', 'elephant.jpg', 'grasshopper.jpg', 'octopus.jpg', 'owl.jpg', 'panda.jpg', 'squirrel.jpg', 'tiger.jpg', 'whale.jpg'];
-
-    // Random connected graph
-    const gData = {
-        nodes: imgs.map((img, id) => ({ id, img })),
-        links: [...Array(imgs.length).keys()]
-            .filter(id => id)
-            .map(id => ({
-                source: id,
-                target: Math.round(Math.random() * (id - 1))
-            }))
-    };
-
 
     const nodes = [];
 
-    let isAddedNodes = [];
+    const isAddedNodes = [];
     data.forEach(item => {
         nodes.push(item.organization)
 
@@ -56,26 +43,10 @@ function ConnectedNodeMap(props) {
     }
 
 
-    console.log(gData);
-    useEffect(() => {
-        // console.log('test links', links)
-        console.log('test', testGData)
-        console.log('gData', gData)
-    }, [])
+
     return (
         <div>
-            {/* <ForceGraph3D
-                graphData={testGData}
-            // nodeThreeObject={}
-            // nodeThreeObject={({ img }) => {
-            //     const imgTexture = new THREE.TextureLoader().load(`./imgs/${img}`);
-            //     const material = new THREE.SpriteMaterial({ map: imgTexture });
-            //     const sprite = new THREE.Sprite(material);
-            //     sprite.scale.set(12, 12);
 
-            //     return sprite;
-            // }}
-            />, */}
             <ForceGraph2D
                 graphData={testGData}
                 nodeLabel="name"
