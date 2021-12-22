@@ -7,6 +7,7 @@ import ConnectedNodeMap from "./component/ConnectedNodeMap/ConnectedNodeMap";
 function App() {
   return (
     <div className="App">
+      <h3>SignalX Assignment</h3>
       <ConnectedNodeMap data={data} />
     </div>
   );

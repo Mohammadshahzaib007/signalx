@@ -14,38 +14,31 @@ function ConnectedNodeMap(props) {
 
     const [highlightNodes, setHighlightNodes] = useState(new Set());
     const [highlightLinks, setHighlightLinks] = useState(new Set());
-    const [hoverNode, setHoverNode] = useState(null);
+    const [clickedNode, setClickedNode] = useState(null);
 
     const updateHighlight = () => {
         setHighlightNodes(highlightNodes);
         setHighlightLinks(highlightLinks);
     };
 
-    const handleNodeHover = node => {
-        highlightNodes.clear();
-        highlightLinks.clear();
+    const handleNodeHighlight = node => {
+        if (node.id === clickedNode?.id) {
+            setClickedNode(null)
+            highlightNodes.clear();
+            highlightLinks.clear();
+            return
+        }
         if (node) {
             highlightNodes.add(node);
             node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
             node.links.forEach(link => highlightLinks.add(link));
         }
 
-        setHoverNode(node || null);
+        setClickedNode(node || null);
         updateHighlight();
     };
 
-    const handleLinkHover = link => {
-        highlightNodes.clear();
-        highlightLinks.clear();
 
-        if (link) {
-            highlightLinks.add(link);
-            highlightNodes.add(link.source);
-            highlightNodes.add(link.target);
-        }
-
-        updateHighlight();
-    };
 
     const nodes = [];
 
@@ -112,11 +105,11 @@ function ConnectedNodeMap(props) {
             <ForceGraph2D
                 graphData={dataWithNeighbors}
                 nodeLabel=""
+                height={620}
+                backgroundColor='#eee'
                 nodeColor="transparent"
                 nodeAutoColorBy="#fff"
-                linkWidth={link => highlightLinks.has(link) ? 5 : 1}
-                linkDirectionalParticles={4}
-                linkDirectionalParticleWidth={link => highlightLinks.has(link) ? 4 : 0}
+                linkWidth={link => highlightLinks.has(link) ? 3 : 1}
 
                 nodeCanvasObjectMode={() => "after"}
                 nodeCanvasObject={(node, ctx, globalScale) => {
@@ -143,9 +136,9 @@ function ConnectedNodeMap(props) {
 
                     return ctx
                 }}
+                linkColor={(link) => (highlightLinks.has(link) ? "red" : "#444")}
                 minZoom={2}
-                onNodeHover={handleNodeHover}
-                onLinkHover={handleLinkHover}
+                onNodeClick={handleNodeHighlight}
             />
         </div>
     )
