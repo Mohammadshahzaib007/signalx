@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import ForceGraph3D from 'react-force-graph-3d'
+import ForceGraph2D from 'react-force-graph-2d'
 
 function ConnectedNodeMap(props) {
 
@@ -22,9 +23,18 @@ function ConnectedNodeMap(props) {
 
     const nodes = [];
 
+    let isAddedNodes = [];
     data.forEach(item => {
         nodes.push(item.organization)
-        item.members.forEach(e => nodes.push(e))
+
+        item.members.forEach(e => {
+            if (!isAddedNodes.includes(e.din)) {
+                nodes.push(e)
+
+            }
+
+            isAddedNodes.push(e.din)
+        })
     })
 
     const links = [];
@@ -54,7 +64,7 @@ function ConnectedNodeMap(props) {
     }, [])
     return (
         <div>
-            <ForceGraph3D
+            {/* <ForceGraph3D
                 graphData={testGData}
             // nodeThreeObject={}
             // nodeThreeObject={({ img }) => {
@@ -65,7 +75,13 @@ function ConnectedNodeMap(props) {
 
             //     return sprite;
             // }}
-            />,
+            />, */}
+            <ForceGraph2D
+                graphData={testGData}
+                nodeLabel="name"
+            // nodeCanvasObject={(node, ctx) => nodePaint(node, getColor(node.id), ctx)}
+            // nodePointerAreaPaint={nodePaint}
+            />
         </div>
     )
 }
